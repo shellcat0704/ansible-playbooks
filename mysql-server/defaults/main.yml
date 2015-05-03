@@ -1,0 +1,12 @@
+# default variables definition for role `mysql-server`
+mysql_server_port: 3306
+mysql_server_addr: '0.0.0.0'
+mysql_server_charset: 'utf8'
+mysql_server_datadir: '/var/lib/mysql'
+
+mysql_server_config:
+  'port': '{{ mysql_server_port }}'
+  'bind-address': '{{ mysql_server_addr }}'
+  'character-set-server': '{{ mysql_server_charset }}'
+  'datadir': '{{ mysql_server_datadir }}'
+

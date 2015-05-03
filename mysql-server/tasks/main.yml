@@ -1,0 +1,23 @@
+# main tasks for role `mysql-server`
+-
+  name: 'install'
+  yum:
+    name: mysql-server
+    state: present
+
+-
+  name: 'config'
+  ini_file:
+    dest: '/etc/my.cnf'
+    section: 'mysqld'
+    option: '{{ item.key }}'
+    value: '{{ item.value }}'
+  with_dict: mysql_server_config
+
+-
+  name: 'enable service'
+  service:
+    name: mysqld
+    enabled: yes
+    state: restarted
+

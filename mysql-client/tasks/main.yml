@@ -1,0 +1,13 @@
+# main tasks for role `mysql-client`
+-
+  name: 'add repository'
+  yum:
+    name: 'http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm'
+    state: present
+
+-
+  name: 'install'
+  yum:
+    name: mysql
+    state: present
+

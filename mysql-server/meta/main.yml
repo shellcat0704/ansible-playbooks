@@ -1,0 +1,5 @@
+# dependencies definition for role `mysql-server`
+dependencies:
+  -
+    role: 'mysql-client'
+
