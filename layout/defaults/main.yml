@@ -1,0 +1,4 @@
+# default variables definition for role `layout`
+layout_application_root: '{{ ansible_env.HOME }}/application'
+layout_permanent_dir: '/shared'
+

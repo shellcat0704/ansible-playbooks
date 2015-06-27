@@ -1,0 +1,8 @@
+# main handlers for role `mysql-server`
+-
+  name: 'mysqld-restarted'
+  sudo: yes
+  service:
+    name: mysqld
+    state: restarted
+

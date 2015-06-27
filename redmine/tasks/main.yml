@@ -1,0 +1,18 @@
+# main tasks for role `redmine`
+-
+  include: 'install.yml'
+
+# rack container
+-
+  include: 'rack/unicorn.yml'
+  when: 'redmine_rack == "unicorn"'
+
+# http container
+-
+  include: 'http/nginx.yml'
+  when: 'redmine_http == "nginx"'
+
+# backup settings
+-
+  include: 'backup.yml'
+

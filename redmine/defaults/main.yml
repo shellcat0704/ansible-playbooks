@@ -1,0 +1,16 @@
+# default variables definition for role `redmine`
+redmine_user: '{{ ansible_ssh_user }}'
+redmine_install_version: '3.0.2'
+redmine_unarchive_path: '{{ layout_application_root }}'
+redmine_install_path: '{{ redmine_unarchive_path }}/redmine'
+
+redmine_rack: 'unicorn'
+redmine_http: 'nginx'
+
+redmine_database_name: 'redmine'
+redmine_database_host: 'localhost'
+redmine_database_port: 3306
+redmine_database_encoding: 'utf8'
+redmine_database_user: 'redmine'
+redmine_database_password: 'redmine'
+

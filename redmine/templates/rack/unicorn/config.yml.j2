@@ -1,0 +1,12 @@
+development:
+  worker_processes: 1
+  listen: "{{ redmine_rack_listen }}"
+ 
+staging:
+  worker_processes: 2
+  listen: "{{ redmine_rack_listen }}"
+ 
+production:
+  worker_processes: 4
+  listen: "{{ redmine_rack_listen }}"
+

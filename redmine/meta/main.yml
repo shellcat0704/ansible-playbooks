@@ -1,0 +1,12 @@
+# dependencies definition for role `redmine`
+dependencies:
+  -
+    role: 'layout'
+  -
+    role: 'mysql-server'
+  -
+    role: 'rbenv'
+  -
+    role: 'nginx'
+    when: 'redmine_http == "nginx"'
+

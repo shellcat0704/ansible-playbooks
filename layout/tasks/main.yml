@@ -1,0 +1,11 @@
+# main tasks for role `layout`
+-
+  name: 'create directory'
+  sudo: no
+  file:
+    path: '{{ item }}'
+    state: directory
+  with_items:
+    - '{{ layout_application_root }}'
+    - '{{ layout_permanent_dir }}'
+

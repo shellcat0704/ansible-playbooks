@@ -1,0 +1,31 @@
+upstream redmine {
+  server {{ redmine_rack_listen }} fail_timeout=0;
+}
+
+server {
+    listen 80;
+    
+    location ~ / {
+        root {{ redmine_install_path }}/public;
+        
+        if (-f $request_filename) {
+            break;
+        }
+
+        proxy_read_timeout 300; # Some requests take more than 30 seconds.
+        proxy_connect_timeout 300; # Some requests take more than 30 seconds.
+        proxy_redirect     off;
+
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_set_header   Host              $http_host;
+        proxy_set_header   X-Real-IP         $remote_addr;
+        proxy_set_header   X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header   Host $host;
+
+        proxy_pass         http://redmine;
+
+        access_log  /var/log/nginx/redmine_access.log;
+        error_log   /var/log/nginx/redmine_error.log;
+    }
+}
+

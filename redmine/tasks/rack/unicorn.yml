@@ -1,0 +1,69 @@
+# rack/unicorn tasks for role `redmine`
+-
+  name: 'set facts'
+  set_fact:
+    redmine_rack_listen: 'unix:{{ redmine_install_path }}/tmp/sockets/unicorn.sock'
+
+-
+  name: 'create Gemfile.local'
+  sudo: no
+  lineinfile:
+    line: 'gem "unicorn"'
+    create: yes
+    follow: yes
+    dest: '{{ redmine_install_path }}/Gemfile.local'
+    state: present
+
+-
+  name: 'install'
+  sudo: no
+  command: '~{{ rbenv_user }}/.rbenv/shims/bundle install --path vendor/bundler --without development test'
+  args:
+    chdir: '{{ redmine_install_path }}'
+
+-
+  name: 'create unicorn.rb'
+  sudo: no
+  template:
+    src: '../../templates/rack/unicorn/config.rb.j2'
+    dest: '{{ redmine_install_path }}/config/unicorn.rb'
+
+-
+  name: 'create unicorn.yml'
+  sudo: no
+  template:
+    src: '../../templates/rack/unicorn/config.yml.j2'
+    dest: '{{ redmine_install_path }}/config/unicorn.yml'
+
+-
+  name: 'create init script'
+  sudo: no
+  template:
+    src: '../../templates/rack/unicorn/init.sh.j2'
+    dest: '{{ redmine_install_path }}/init.sh'
+    mode: 0755
+
+-
+  name: 'link init script'
+  sudo: yes
+  file:
+    src: '{{ redmine_install_path }}/init.sh'
+    dest: '/etc/init.d/redmine'
+    state: link
+
+-
+  name: 'enable service'
+  sudo: yes
+  service:
+    name: 'redmine'
+    enabled: yes
+    state: restarted
+
+-
+  name: 'chmod home directory'
+  sudo: no
+  file:
+    path: '{{ ansible_env.HOME }}'
+    mode: 0755
+    recurse: no
+

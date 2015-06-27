@@ -1,0 +1,4 @@
+# default variables definition for role `rbenv`
+rbenv_user: '{{ ansible_ssh_user }}'
+rbenv_install_version: '2.2.2'
+

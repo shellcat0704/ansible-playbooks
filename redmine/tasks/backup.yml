@@ -1,0 +1,10 @@
+# backup tasks for role `redmine`
+-
+  name: 'set cron'
+  cron:
+    name: 'backup redmine data'
+    job: '{{ mysql_dump }} -u{{ redmine_database_user }} -h{{ redmine_database_host }} -P{{ redmine_database_port }} -p{{ redmine_database_password }} {{ redmine_database_name }} > {{ layout_permanent_dir }}/redmine.sql'
+    hour: 4
+    minute: 0
+    state: present
+

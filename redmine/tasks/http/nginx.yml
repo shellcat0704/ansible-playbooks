@@ -1,0 +1,9 @@
+# http container `nginx` tasks for role `redmine`
+-
+  name: 'create site config'
+  sudo: yes
+  template:
+    src: '../../templates/http/nginx/site.conf.j2'
+    dest: '/etc/nginx/conf.d/redmine.conf'
+  notify: 'nginx-restarted'
+

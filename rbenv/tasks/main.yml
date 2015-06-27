@@ -1,0 +1,83 @@
+# main tasks for role `rbenv`
+-
+  name: 'install packages'
+  sudo: yes
+  yum:
+    name: '{{ item }}'
+    state: present
+  with_items:
+    - gcc
+    - git
+    - libyaml
+    - libyaml-devel
+    - zlib
+    - zlib-devel
+    - readline
+    - readline-devel
+    - openssl
+    - openssl-devel
+    - libxml2
+    - libxml2-devel
+    - libxslt
+    - libxslt-devel
+
+-
+  name: 'install rbenv'
+  sudo: no
+  git:
+    repo: 'https://github.com/sstephenson/rbenv.git'
+    dest: '/home/{{ rbenv_user }}/.rbenv'
+
+-
+  name: 'install env value'
+  sudo: no
+  lineinfile:
+    dest: '~{{ rbenv_user }}/.bash_profile'
+    line: '{{ item }}'
+  with_items:
+    - 'export PATH="$HOME/.rbenv/bin:$PATH"'
+    - 'eval "$(rbenv init -)"'
+
+-
+  name: 'install ruby-build'
+  sudo: no
+  git:
+    repo: 'https://github.com/sstephenson/ruby-build.git'
+    dest: '~{{ rbenv_user }}/.rbenv/plugins/ruby-build'
+
+-
+  name: 'install rbenv-gem-rehash'
+  sudo: no
+  git:
+    repo: 'https://github.com/sstephenson/rbenv-gem-rehash.git'
+    dest: '/home/{{ rbenv_user }}/.rbenv/plugins/rbenv-gem-rehash'
+
+-
+  name: 'install ruby'
+  sudo: no
+  command: '~{{ rbenv_user }}/.rbenv/bin/rbenv install -s {{ rbenv_install_version }}'
+  register: result
+  changed_when: result.stdout != ""
+
+-
+  name: 'make it global'
+  sudo: no
+  command: '~{{ rbenv_user }}/.rbenv/bin/rbenv global {{ rbenv_install_version }}'
+  changed_when: False
+
+-
+  name: 'install bundler'
+  sudo: no
+  gem:
+    name: 'bundler'
+    state: present
+    executable: '~{{ rbenv_user }}/.rbenv/shims/gem'
+    user_install: false
+
+-
+  name: 'install ImageMagick'
+  sudo: yes
+  yum:
+    name: 'ImageMagick-devel'
+    state: present
+

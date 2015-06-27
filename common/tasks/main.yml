@@ -1,0 +1,9 @@
+# main tasks for role `common`
+-
+  name: 'install'
+  sudo: yes
+  yum:
+    name: '{{ item }}'
+    state: present
+  with_items: common_packages
+

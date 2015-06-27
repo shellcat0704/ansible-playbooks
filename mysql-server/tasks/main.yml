@@ -1,12 +1,14 @@
 # main tasks for role `mysql-server`
 -
   name: 'install'
+  sudo: yes
   yum:
     name: mysql-server
     state: present
 
 -
   name: 'config'
+  sudo: yes
   ini_file:
     dest: '/etc/my.cnf'
     section: 'mysqld'
@@ -16,8 +18,12 @@
 
 -
   name: 'enable service'
+  sudo: yes
   service:
     name: mysqld
     enabled: yes
-    state: restarted
+  notify: 'mysqld-restarted'
+
+-
+  meta: flush_handlers
 
